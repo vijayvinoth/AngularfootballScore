@@ -1,0 +1,61 @@
+<div>
+    <input type="text" [(ngModel)]="searchText" placeholder="Search">
+</div>
+
+<div>
+    <table class="table" *ngIf="(resultMatchdataSource | filter: searchText).length > 0; else noResults">
+        <colgroup>
+            <col width="5%">
+            <col width="15%">
+            <col width="35%">
+            <col width="15%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Home Name</th>
+                <th scope="col">Away Name</th>
+                <th scope="col">Period</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let ds of resultMatchdataSource | filter: searchText; let i = index">
+                <tr>
+                    <td>{{i + 1}}</td>
+                    <td>{{ds.home_name}}</td>
+                    <td>{{ds.away_name}}</td>
+                    <td>{{ds.period}}</td>
+                </tr>
+
+                <tr *ngIf="(ds.allgoals | filter: searchText).length > 0">
+                    <td colspan="999">
+                        <h6>Goal Details:</h6>
+                        <table>
+                            <colgroup>
+                                <col width="15%">
+                                <col width="15%">
+                                <col width="15%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Player Name</th>
+                                    <th>Minutes</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tr *ngFor="let ds of ds.allgoals | filter: searchText;">
+                                <td>{{ds.player_name}}</td>
+                                <td>{{ds.minutes}}</td>
+                                <td>{{ds.type}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+
+    <ng-template #noResults>
+        <p>No results found for "{{searchText}}".</p>
+    </ng-template>
+</div>

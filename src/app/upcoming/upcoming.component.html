@@ -1,0 +1,40 @@
+<div>
+    <input type="text" [(ngModel)]="searchText" placeholder="Search">
+</div>
+
+<div>
+    <table class="table" *ngIf="(upcomingMatchdataSource | filter: searchText).length > 0; else noResults">
+        <colgroup>
+            <col width="5%">
+            <col width="15%">
+            <col width="15%">
+            <col width="20%">
+            <col width="20%">
+            <col width="10%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Home Name</th>
+                <th scope="col">Away Name</th>
+                <th scope="col">Venue City</th>
+                <th scope="col">Venue Name</th>
+                <th scope="col">Period</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ds of upcomingMatchdataSource | filter: searchText; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{ds.home_name}}</td>
+                <td>{{ds.away_name}}</td>
+                <td>{{ds.venue_city}}</td>
+                <td>{{ds.venue_name}}</td>
+                <td>{{ds.period}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #noResults>
+        <p>No results found for "{{searchText}}".</p>
+    </ng-template>
+</div>
